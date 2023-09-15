@@ -1,14 +1,19 @@
 const { compare } = require("bcryptjs");
 const { sign } = require("jsonwebtoken");
-const knex = require("../database/knex");
 const authConfig = require("../configs/auth");
 const AppError = require("../utils/AppError");
+const prisma = require('../lib/prisma')
+
 
 class SessionsController {
   async create(request, response) {
     const { email, password } = request.body;
 
-    const user = await knex("users").where({ email }).first();
+    const user = await prisma.user.findUniqueOrThrow({
+      where: {
+        email
+      }
+    })
 
     if (!user) {
       throw new AppError("E-mail e/ou senha incorreta.", 401);
