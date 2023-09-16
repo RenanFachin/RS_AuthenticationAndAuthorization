@@ -12,10 +12,12 @@ function ensureAuthenticated(request, response, next) {
   const [, token] = authHeader.split(' ');
 
   try {
-    const { sub: user_id } = verify(token, authConfig.jwt.secret);
+    // Capturando o role que vem da rota de criação de session
+    const { role, sub: user_id } = verify(token, authConfig.jwt.secret);
 
     request.user = {
       id: Number(user_id),
+      role
     };
 
     return next();
