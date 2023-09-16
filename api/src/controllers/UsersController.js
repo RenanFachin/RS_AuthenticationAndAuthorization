@@ -13,7 +13,7 @@ class UsersController {
       }),
       email: z.string().email({ message: "Invalid email address" }),
       password: z.string().min(3, { message: "Sua senha precisa ter no mínimo 3 caracteres" }),
-      role: z.enum(["customer", "admin"]).default("customer")
+      role: z.enum(["customer", "admin", "sale"]).default("customer")
     })
 
     try {

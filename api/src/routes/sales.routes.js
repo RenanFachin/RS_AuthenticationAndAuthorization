@@ -9,7 +9,7 @@ const salesController = new SalesController();
 
 // Aplicando um middleware para todas as rotas deste conjunto de rotas
 salesRoutes.use(ensureAuthenticated);
-salesRoutes.use(verifyUserAuthorization("admin")) // somente o admin tem acesso
+salesRoutes.use(verifyUserAuthorization(["admin", "sale"])) // somente o admin tem acesso
 
 salesRoutes.get("/", salesController.index);
 
