@@ -20,6 +20,8 @@ export const Container = styled.nav`
     display: flex;
     align-items: center;
 
+    
+
     &::after {
         content:""; 
         height: 24px; 
@@ -47,6 +49,13 @@ export const User = styled.div`
         display: flex;
         align-items: center;
         margin-top: 3px;
+
+        > span {
+          color: #633BBC;
+          font-weight: bold;
+          margin-left: 4px;
+          text-transform: uppercase;
+        }
 
         > svg {
             margin-right: 5px;
