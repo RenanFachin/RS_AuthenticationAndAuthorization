@@ -6,6 +6,7 @@ import { Header } from '../../components/Header';
 
 import { useAuth } from '../../hooks/auth';
 import { USER_ROLE } from '../../utils/roles'
+import { useEffect } from 'react';
 
 export function Home() {
   // recuperando as infos do usuário
