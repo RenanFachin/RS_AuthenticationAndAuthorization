@@ -11,7 +11,7 @@ function ensureAuthenticated(request, response, next) {
 
   // Como fica armazenado nos cookie: "token=dijfdjsife9210341dh"
 
-  const [, token] = authHeader.split('token=');
+  const [, token] = authHeader.cookie.split('token=');
 
   try {
     // Capturando o role que vem da rota de criação de session
