@@ -15,12 +15,16 @@ export function Routes() {
   const { user, signOut } = useAuth();
 
   useEffect(() => {
-    api.get('/users/validated').catch((error) => signOut())
-  },[])
+    api.get('/users/validated').catch((error) => {
+      if (error.response?.status === 401) {
+        signOut()
+      }
+    })
+  }, [])
 
-  function AccessRoute(){
+  function AccessRoute() {
     // Como existem diferentes tipos de roles para os usuários, o if ternário não cobriria todas as possibilidades. Solução: utilizar o switch e receber o tipo de role do user como param
-    switch(user.role){
+    switch (user.role) {
       case USER_ROLE.ADMIN:
         return <AdminRoutes />
       case USER_ROLE.CUSTOMER:
