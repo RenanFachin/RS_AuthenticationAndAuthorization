@@ -35,6 +35,11 @@ class SessionsController {
       expiresIn
     });
 
+
+    // Deletando a informação da senha que vem do db de user
+    delete user.password
+
+
     response.status(201).json({ token, user });
   }
 }
