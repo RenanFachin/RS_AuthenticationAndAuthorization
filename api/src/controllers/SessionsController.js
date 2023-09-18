@@ -35,12 +35,19 @@ class SessionsController {
       expiresIn
     });
 
+    response.cookie("token", token, {
+      httpOnly: true, // httpOnly é uma medida de segurança para impedir que seja acessado por scripts
+      sameSite: "Strict",
+      secure: true,
+      maxAge: 15 * 60 * 1000 // 15 minutos
+    })
+
 
     // Deletando a informação da senha que vem do db de user
     delete user.password
 
 
-    response.status(201).json({ token, user });
+    response.status(201).json({ user });
   }
 }
 
