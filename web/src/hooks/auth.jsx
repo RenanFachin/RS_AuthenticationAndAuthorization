@@ -14,17 +14,26 @@ function AuthProvider({ children }) {
 
   async function signIn({ email, password }) {
     try {
-      const response = await api.post("sessions", { email, password });
-      const { token, user } = response.data;
+      const response = await api.post("sessions", { email, password }, {
+        // Definindo as props para capturar o cookie
+        withCredentials: true
+      });
+
+
+      // const { token, user } = response.data; -> o token agora retorna em cookie
+      const { user } = response.data
 
       // console.log(user)
 
       localStorage.setItem("@estock:user", JSON.stringify(user));
-      localStorage.setItem("@estock:token", token);
 
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      // Nos cookie não é necessário mais salvar no localstorage e tbm no estado
+      // localStorage.setItem("@estock:token", token);
+      // api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      // setData({ token, user });
 
-      setData({ token, user });
+
+      setData({ user });
 
     } catch (error) {
       if (error.response) {
@@ -36,7 +45,7 @@ function AuthProvider({ children }) {
   };
 
   function signOut() {
-    localStorage.removeItem("@estock:token");
+    // localStorage.removeItem("@estock:token");
     localStorage.removeItem("@estock:user");
 
     setData({});
@@ -44,14 +53,14 @@ function AuthProvider({ children }) {
 
 
   useEffect(() => {
-    const token = localStorage.getItem("@estock:token");
+    // const token = localStorage.getItem("@estock:token");
     const user = localStorage.getItem("@estock:user");
 
-    if (token && user) {
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    if (user) {
+      // api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
       setData({
-        token,
+        // token,
         user: JSON.parse(user)
       });
     }
